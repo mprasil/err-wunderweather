@@ -1,0 +1,9 @@
+[Core]
+Name = WunderWeather
+Module = wunderweather
+
+[Documentation]
+Description = Get the forecast for next 10 days.
+
+[Python]
+Version = 2+
