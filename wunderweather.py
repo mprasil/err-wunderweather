@@ -84,9 +84,10 @@ class Wunderground:
         nighttemp = forecastday[daydiff + 1]['low']['celsius']
         avewind = str(forecastday[daydiff + 1]['avewind']['kph'])
         city = r['current_observation']['display_location']['city']
+        country = r['current_observation']['display_location']['state_name']
 
-        data = {'city': city, 'daytemp': daytemp, 'nighttemp': nighttemp,
-                'avewind': avewind, 'txt': txt}
+        data = {'city': city, 'country': country, 'daytemp': daytemp,
+                'nighttemp': nighttemp, 'avewind': avewind, 'txt': txt}
         return format_str.format(**data)
 
 
@@ -138,7 +139,7 @@ class WunderWeather(BotPlugin):
 
         try:
             data = self._provider.retrieve(dest)
-            fill = u'{city} -> Day: {daytemp}\u2103 ' \
+            fill = u'{city}, {country} -> Day: {daytemp}\u2103 ' \
                    u', Night: {nighttemp}\u2103 ' \
                    ', Wind: {avewind} km/h ({txt})'
             return self._provider.output(data, diff, fill)#.encode('utf-8')
