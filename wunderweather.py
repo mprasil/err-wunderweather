@@ -14,8 +14,7 @@ CONFIG_TEMPLATE = {
 
 
 def split_args_by(args, by):
-    a = ' '.join(args)
-    return map(lambda x: x.strip(), a.split(by))
+    return map(lambda x: x.strip(), args.split(by))
 
 
 def get_json_or_timeout(url):
@@ -109,7 +108,7 @@ class WunderWeather(BotPlugin):
     def get_configuration_template(self):
         return CONFIG_TEMPLATE
 
-    @botcmd(split_args_with=' ')
+    @botcmd
     def wunderweather(self, msg, args):
         """Check for weather in given location
 
@@ -120,8 +119,10 @@ class WunderWeather(BotPlugin):
         if not len(args):
             return
 
-        # if '-' in args:
-        #     args = split_args_by(args, '-')
+        if '-' in args:
+            args = split_args_by(args, '-')
+        else:
+            args = args.split(' ')
 
         try:
             # try to grab last argument, which can be date
@@ -142,6 +143,6 @@ class WunderWeather(BotPlugin):
             fill = u'{city}, {country} -> Day: {daytemp}\u2103 ' \
                    u', Night: {nighttemp}\u2103 ' \
                    ', Wind: {avewind} km/h ({txt})'
-            return self._provider.output(data, diff, fill)#.encode('utf-8')
+            return self._provider.output(data, diff, fill)  # .encode('utf-8')
         except WeatherError as e:
             return str(e).encode('utf-8')
