@@ -108,7 +108,7 @@ class WunderWeather(BotPlugin):
     def get_configuration_template(self):
         return CONFIG_TEMPLATE
 
-    @botcmd
+    @botcmd(name="weather")
     def wunderweather(self, msg, args):
         """Check for weather in given location
 
